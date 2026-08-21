@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Diario de Audios - Nuestra Relación</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;600&display=swap');
+
+        /* =========================
+           CONFIGURACIÓN GENERAL
+        ========================== */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+
+        .slider-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        /* =========================
+           DIAPOSITIVAS
+        ========================== */
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            opacity: 0;
+
+            transition:
+                opacity 0.8s ease-in-out,
+                transform 0.8s ease-in-out;
+
+            transform: scale(0.95);
+
+            z-index: 0;
+
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: scale(1);
+            z-index: 1;
+        }
+
+        /* =========================
+           TÍTULOS
+        ========================== */
+
+        h1,
+        h2 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 4rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* =========================
+           PORTADA
+        ========================== */
+
+        p.description {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin-bottom: 2rem;
+
+            font-weight: 300;
+            line-height: 1.6;
+
+            background: rgba(0,0,0,0.3);
+
+            padding: 15px 25px;
+            border-radius: 10px;
+
+            backdrop-filter: blur(5px);
+        }
+
+        /* =========================
+           AUDIO
+        ========================== */
+
+        .audio-container {
+            background: rgba(255,255,255,0.15);
+
+            padding: 20px;
+            border-radius: 15px;
+
+            backdrop-filter: blur(10px);
+
+            margin-bottom: 1rem;
+
+            width: 100%;
+            max-width: 500px;
+
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        audio {
+            width: 100%;
+            outline: none;
+            border-radius: 30px;
+        }
+
+        /* =========================
+           FONDOS
+        ========================== */
+
+        .bg-cover {
+            background: linear-gradient(
+                135deg,
+                #2b1055,
+                #7597de
+            );
+        }
+
+        .bg-day1 {
+            background: linear-gradient(
+                135deg,
+                #ff9a9e 0%,
+                #fecfef 99%,
+                #fecfef 100%
+            );
+            color: #333;
+        }
+
+        .bg-day2 {
+            background: linear-gradient(
+                120deg,
+                #a1c4fd 0%,
+                #c2e9fb 100%
+            );
+            color: #333;
+        }
+
+        .bg-day3 {
+            background: linear-gradient(
+                120deg,
+                #f6d365 0%,
+                #fda085 100%
+            );
+            color: #333;
+        }
+
+        .bg-day4 {
+            background: linear-gradient(
+                120deg,
+                #84fab0 0%,
+                #8fd3f4 100%
+            );
+            color: #333;
+        }
+
+        .bg-day5 {
+            background: linear-gradient(
+                120deg,
+                #a18cd1 0%,
+                #fbc2eb 100%
+            );
+            color: #333;
+        }
+
+        .bg-day6 {
+            background: linear-gradient(
+                120deg,
+                #fbc2eb 0%,
+                #a6c1ee 100%
+            );
+            color: #333;
+        }
+
+        .bg-day7 {
+            background: linear-gradient(
+                120deg,
+                #fdcbf1 0%,
+                #e6dee9 100%
+            );
+            color: #333;
+        }
+
+        .bg-day8 {
+            background: linear-gradient(
+                120deg,
+                #e0c3fc 0%,
+                #8ec5fc 100%
+            );
+            color: #333;
+        }
+
+        .bg-day9 {
+            background: linear-gradient(
+                120deg,
+                #4facfe 0%,
+                #00f2fe 100%
+            );
+            color: #333;
+        }
+
+        .bg-day10 {
+            background: linear-gradient(
+                120deg,
+                #43e97b 0%,
+                #38f9d7 100%
+            );
+            color: #333;
+        }
+
+        .bg-day11 {
+            background: linear-gradient(
+                to right,
+                #434343 0%,
+                black 100%
+            );
+        }
+
+        .bg-day12 {
+            background: linear-gradient(
+                to top,
+                #ff0844 0%,
+                #ffb199 100%
+            );
+        }
+
+        .bg-day13 {
+            background: linear-gradient(
+                to top,
+                #0ba360 0%,
+                #3cba92 100%
+            );
+        }
+
+        .bg-day14 {
+            background: linear-gradient(
+                120deg,
+                #fa709a 0%,
+                #fee140 100%
+            );
+            color: #333;
+        }
+
+        .bg-day15 {
+            background: linear-gradient(
+                120deg,
+                #6a11cb 0%,
+                #2575fc 100%
+            );
+        }
+
+        /* =========================
+           MENSAJE FINAL
+        ========================== */
+
+        .bg-message {
+            background: linear-gradient(
+                135deg,
+                #2b1055 0%,
+                #6a11cb 45%,
+                #ff758c 100%
+            );
+
+            color: white;
+
+            justify-content: flex-start;
+
+            padding-top: 55px;
+            padding-bottom: 105px;
+        }
+
+        .bg-message h2 {
+            font-size: 2.8rem;
+
+            margin-bottom: 20px;
+
+            flex-shrink: 0;
+
+            text-shadow:
+                2px 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .message-container {
+            width: 90%;
+            max-width: 1080px;
+
+            padding: 28px 38px;
+
+            border-radius: 22px;
+
+            background:
+                rgba(255,255,255,0.13);
+
+            border:
+                1px solid rgba(255,255,255,0.28);
+
+            backdrop-filter: blur(12px);
+
+            box-shadow:
+                0 12px 35px rgba(0,0,0,0.25);
+
+            max-height: calc(100vh - 200px);
+
+            overflow-y: auto;
+        }
+
+        .message-text {
+            width: 100%;
+
+            font-family: 'Poppins', sans-serif;
+
+            font-size: 1rem;
+
+            line-height: 1.55;
+
+            font-weight: 300;
+
+            color: white;
+
+            /* Texto justificado */
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        .message-text p {
+            margin-bottom: 14px;
+        }
+
+        .message-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Scroll discreto solo si llegara a necesitarlo */
+        .message-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .message-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .message-container::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.35);
+            border-radius: 10px;
+        }
+
+        .message-container::-webkit-scrollbar-thumb:hover {
+            background: rgba(255,255,255,0.55);
+        }
+
+        /* =========================
+           AUDIO EN FONDOS CLAROS
+        ========================== */
+
+        .bg-day1 .audio-container,
+        .bg-day2 .audio-container,
+        .bg-day3 .audio-container,
+        .bg-day4 .audio-container,
+        .bg-day5 .audio-container,
+        .bg-day6 .audio-container,
+        .bg-day7 .audio-container,
+        .bg-day8 .audio-container,
+        .bg-day9 .audio-container,
+        .bg-day10 .audio-container,
+        .bg-day14 .audio-container {
+            background: rgba(255,255,255,0.6);
+            border-color: rgba(0,0,0,0.1);
+        }
+
+        /* =========================
+           BOTONES
+        ========================== */
+
+        .controls {
+            position: absolute;
+
+            bottom: 35px;
+
+            width: 100%;
+
+            display: flex;
+            justify-content: center;
+
+            gap: 20px;
+
+            z-index: 10;
+        }
+
+        button {
+            background: rgba(255,255,255,0.2);
+
+            color: white;
+
+            border: 2px solid rgba(255,255,255,0.5);
+
+            padding: 12px 30px;
+
+            font-size: 1rem;
+
+            border-radius: 30px;
+
+            cursor: pointer;
+
+            backdrop-filter: blur(5px);
+
+            transition: all 0.3s;
+
+            font-family: 'Poppins', sans-serif;
+
+            font-weight: 600;
+        }
+
+        button:hover {
+            background: rgba(255,255,255,0.4);
+
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            opacity: 0.35;
+            cursor: default;
+            transform: none;
+        }
+
+        /* =========================
+           CONTADOR
+        ========================== */
+
+        .progress-indicator {
+            position: absolute;
+
+            top: 20px;
+            right: 25px;
+
+            font-size: 1.1rem;
+
+            z-index: 10;
+
+            font-weight: 300;
+
+            background: rgba(0,0,0,0.3);
+
+            padding: 8px 20px;
+
+            border-radius: 20px;
+
+            color: white;
+
+            backdrop-filter: blur(5px);
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 768px) {
+
+            .slide {
+                padding: 1.2rem;
+            }
+
+            h1 {
+                font-size: 2.4rem;
+            }
+
+            h2 {
+                font-size: 2.1rem;
+            }
+
+            p.description {
+                font-size: 1rem;
+                max-width: 90%;
+            }
+
+            .audio-container {
+                max-width: 92%;
+                padding: 15px;
+            }
+
+            .bg-message {
+                padding-top: 65px;
+                padding-bottom: 90px;
+            }
+
+            .bg-message h2 {
+                font-size: 2rem;
+                margin-bottom: 15px;
+            }
+
+            .message-container {
+                width: 95%;
+
+                padding: 18px 20px;
+
+                max-height:
+                    calc(100vh - 175px);
+            }
+
+            .message-text {
+                font-size: 0.86rem;
+                line-height: 1.5;
+            }
+
+            .message-text p {
+                margin-bottom: 12px;
+            }
+
+            .controls {
+                bottom: 18px;
+                gap: 12px;
+            }
+
+            button {
+                padding: 10px 18px;
+                font-size: 0.85rem;
+            }
+
+            .progress-indicator {
+                top: 12px;
+                right: 12px;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Pantallas con poca altura */
+        @media (max-height: 700px) and (min-width: 769px) {
+
+            .bg-message {
+                padding-top: 35px;
+                padding-bottom: 85px;
+            }
+
+            .bg-message h2 {
+                font-size: 2.2rem;
+                margin-bottom: 12px;
+            }
+
+            .message-container {
+                padding: 20px 30px;
+
+                max-height:
+                    calc(100vh - 150px);
+            }
+
+            .message-text {
+                font-size: 0.88rem;
+                line-height: 1.45;
+            }
+
+            .message-text p {
+                margin-bottom: 10px;
+            }
+
+            .controls {
+                bottom: 18px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- CONTADOR -->
+
+    <div class="progress-indicator">
+        <span id="current-slide">1</span>
+        /
+        <span id="total-slides">17</span>
+    </div>
+
+
+    <!-- =========================
+         CONTENEDOR DE SLIDES
+    ========================== -->
+
+    <div class="slider-container">
+
+
+        <!-- PORTADA -->
+
+        <div class="slide active bg-cover">
+
+            <h1>
+                Mis días desde que me pediste un tiempo
+            </h1>
+
+            <p class="description">
+                A continuación vas a ver todo en lo que quiero mejorar para estar contigo,
+                además de las cosas que más me gustan de ti y los momentos inolvidables
+                que he pasado contigo. Espero te guste...
+            </p>
+
+        </div>
+
+
+        <!-- DÍA 1 -->
+
+        <div class="slide bg-day1">
+
+            <h2>Día 1</h2>
+
+            <div class="audio-container">
+                <audio controls>
+                    <source
+                        src="audios/Día1-1.mp3"
+                        type="audio/mpeg">
+                </audio>
+            </div>
+
+            <div class="audio-container">
+                <audio controls>
+                    <source
+                        src="audios/Día1-2.mp3"
+                        type="audio/mpeg">
+                </audio>
+            </div>
+
+        </div>
+
+
+        <!-- DÍA 2 -->
+
+        <div class="slide bg-day2">
+
+            <h2>Día 2</h2>
+
+            <div class="audio-container">
+                <audio controls>
+                    <source
+                        src="audios/Día2-1.mp3"
+                        type="audio/mpeg">
+                </audio>
+            </div>
+
+            <div class="audio-container">
+                <audio controls>
+                    <source
+                        src="audios/Día2-2.mp3"
+                        type="audio/mpeg">
+                </audio>
+            </div>
+
+        </div>
+
+
+        <!-- DÍA 3 -->
+
+        <div class="slide bg-day3">
+
+            <h2>Día 3</h2>
+
+            <div class="audio-container">
+                <audio controls>
+                    <source
+                        src="audios/Día3.mp3"
+                        type="audio/mpeg">
+                </audio>
+            </div>
+
+        </div>
+
+
+        <!-- DÍA 4 -->
+
+        <div class="slide bg-day4">
+
+            <h2>Día 4</h2>
+
+            <div class="audio-container">
+                <audio controls>
+                    <source
+                        src="audios/Día4.mp3"
+                        type="audio/mpeg">
+                </audio>
+            </div>
+
+        </div>
+
+
+        <!-- DÍA 5 -->
+
+        <div class="slide bg-day5">
+
+            <h2>Día 5</h2>
+
+            <div class="audio-container">
+                <audio controls>
+                    <source
+                        src="audios/Día5.mp3"
+                        type="audio/mpeg">
+                </audio>
+            </div>
+
+        </div>
+
+
+        <!-- DÍA 6 -->
+
+        <div class="slide bg-day6">
+
+            <h2>Día 6</h2>
+
+            <div class="audio-container">
+                <audio controls>
+                    <source
+                        src="audios/Día6.mp3"
+                        type="audio/mpeg">
+                </audio>
+            </div>
+
+        </div>
+
+
+        <!-- DÍA 7 -->
+
+        <div class="slide bg-day7">
+
+            <h2>Día 7</h2>
+
+            <div class="audio-container">
+                <audio controls>
+                    <source
+                        src="audios/Día7.mp3"
+                        type="audio/mpeg">
+                </audio>
+            </div>
+
+        </div>
+
+
+        <!-- DÍA 8 -->
+
+        <div class="slide bg-day8">
+
+            <h2>Día 8</h2>
+
+            <div class="audio-container">
+                <audio controls>
+                    <source
+                        src="audios/Día8.mp3"
+                        type="audio/mpeg">
+                </audio>
+            </div>
+
+        </div>
+
+
+        <!-- DÍA 9 -->
+
+        <div class="slide bg-day9">
+
+            <h2>Día 9</h2>
+
+            <div class="audio-container">
+                <audio controls>
+                    <source
+                        src="audios/Día9.mp3"
+                        type="audio/mpeg">
+                </audio>
+            </div>
+
+        </div>
+
+
+        <!-- DÍA 10 -->
+
+        <div class="slide bg-day10">
+
+            <h2>Día 10</h2>
+
+            <div class="audio-container">
+                <audio controls>
+                    <source
+                        src="audios/Día10.mp3"
+                        type="audio/mpeg">
+                </audio>
+            </div>
+
+        </div>
+
+
+        <!-- DÍA 11 -->
+
+        <div class="slide bg-day11">
+
+            <h2>Día 11</h2>
+
+            <div class="audio-container">
+                <audio controls>
+                    <source
+                        src="audios/Día11.mp3"
+                        type="audio/mpeg">
+                </audio>
+            </div>
+
+        </div>
+
+
+        <!-- DÍA 12 -->
+
+        <div class="slide bg-day12">
+
+            <h2>Día 12</h2>
+
+            <div class="audio-container">
+                <audio controls>
+                    <source
+                        src="audios/Día12.mp3"
+                        type="audio/mpeg">
+                </audio>
+            </div>
+
+        </div>
+
+
+        <!-- DÍA 13 -->
+
+        <div class="slide bg-day13">
+
+            <h2>Día 13</h2>
+
+            <div class="audio-container">
+                <audio controls>
+                    <source
+                        src="audios/Día13.mp3"
+                        type="audio/mpeg">
+                </audio>
+            </div>
+
+        </div>
+
+
+        <!-- DÍA 14 -->
+
+        <div class="slide bg-day14">
+
+            <h2>Día 14</h2>
+
+            <div class="audio-container">
+                <audio controls>
+                    <source
+                        src="audios/Día14.mp3"
+                        type="audio/mpeg">
+                </audio>
+            </div>
+
+        </div>
+
+
+        <!-- DÍA 15 -->
+
+        <div class="slide bg-day15">
+
+            <h2>Día 15</h2>
+
+            <div class="audio-container">
+                <audio controls>
+                    <source
+                        src="audios/Día15.mp3"
+                        type="audio/mpeg">
+                </audio>
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             MENSAJE FINAL
+        ========================== -->
+
+        <div class="slide bg-message">
+
+            <h2>
+                Mensaje para ti
+            </h2>
+
+            <div class="message-container">
+
+                <div class="message-text">
+
+                    <p>
+                        Después de todo este tiempo, entendí muchas cosas. Entendí que
+                        amarte no solo se trata de decirte lo mucho que te quiero, sino
+                        de demostrarlo con mis acciones, con paciencia, con atención y
+                        con la forma en la que decido estar para ti cada día.
+                    </p>
+
+                    <p>
+                        Cuando me pediste un tiempo, aunque fue difícil para mí, también
+                        me ayudó a pensar, a reconocer cosas en las que quiero mejorar y
+                        a valorar todavía más lo que tenemos. Ahora que estamos juntos
+                        otra vez, no quiero tomar este momento como si todo simplemente
+                        hubiera vuelto a ser como antes. Quiero verlo como una nueva
+                        oportunidad para construir algo mejor contigo.
+                    </p>
+
+                    <p>
+                        No puedo prometer ser perfecto, porque sé que voy a seguir
+                        aprendiendo y seguramente me voy a equivocar en algunas cosas,
+                        pero sí puedo prometerte que quiero dar lo mejor de mí. Quiero
+                        escucharte más, entenderte mejor, cuidar los pequeños detalles
+                        y demostrarte que nuestra relación es importante para mí.
+                    </p>
+
+                    <p>
+                        Gracias por volver a elegirme y por permitirme seguir
+                        compartiendo mi vida contigo. Espero que estos días, estos audios
+                        y todo lo que preparé puedan mostrarte aunque sea un poco de todo
+                        lo que he pensado y sentido.
+                    </p>
+
+                    <p>
+                        Te amo muchísimo. Y más que regresar a lo que éramos, quiero que
+                        juntos construyamos algo todavía más bonito, sano y fuerte que
+                        antes. ❤️
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         CONTROLES
+    ========================== -->
+
+    <div class="controls">
+
+        <button
+            id="btnAnterior"
+            onclick="prevSlide()">
+            &#10094; Anterior
+        </button>
+
+        <button
+            id="btnSiguiente"
+            onclick="nextSlide()">
+            Siguiente &#10095;
+        </button>
+
+    </div>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+        let currentSlide = 0;
+
+        const slides =
+            document.querySelectorAll('.slide');
+
+        const totalSlides =
+            slides.length;
+
+        const btnAnterior =
+            document.getElementById('btnAnterior');
+
+        const btnSiguiente =
+            document.getElementById('btnSiguiente');
+
+
+        /* CONTADOR TOTAL */
+
+        document
+            .getElementById('total-slides')
+            .innerText = totalSlides;
+
+
+        /* =========================
+           ACTUALIZAR DIAPOSITIVA
+        ========================== */
+
+        function updateSlide() {
+
+            slides.forEach((slide, index) => {
+
+                slide.classList.remove('active');
+
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                }
+
+            });
+
+
+            /* ACTUALIZAR CONTADOR */
+
+            document
+                .getElementById('current-slide')
+                .innerText =
+                currentSlide + 1;
+
+
+            /* PAUSAR AUDIOS AL CAMBIAR */
+
+            document
+                .querySelectorAll('audio')
+                .forEach(audio => {
+
+                    audio.pause();
+                    audio.currentTime = 0;
+
+                });
+
+
+            /* BOTONES */
+
+            btnAnterior.disabled =
+                currentSlide === 0;
+
+            btnSiguiente.disabled =
+                currentSlide === totalSlides - 1;
+
+        }
+
+
+        /* =========================
+           SIGUIENTE
+        ========================== */
+
+        function nextSlide() {
+
+            if (
+                currentSlide <
+                totalSlides - 1
+            ) {
+
+                currentSlide++;
+
+                updateSlide();
+
+            }
+
+        }
+
+
+        /* =========================
+           ANTERIOR
+        ========================== */
+
+        function prevSlide() {
+
+            if (
+                currentSlide > 0
+            ) {
+
+                currentSlide--;
+
+                updateSlide();
+
+            }
+
+        }
+
+
+        /* =========================
+           FLECHAS DEL TECLADO
+        ========================== */
+
+        document.addEventListener(
+            'keydown',
+            function(event) {
+
+                if (
+                    event.key ===
+                    'ArrowRight'
+                ) {
+
+                    nextSlide();
+
+                }
+
+                else if (
+                    event.key ===
+                    'ArrowLeft'
+                ) {
+
+                    prevSlide();
+
+                }
+
+            }
+        );
+
+
+        /* CONFIGURACIÓN INICIAL */
+
+        updateSlide();
+
+    </script>
+
+</body>
+</html>
